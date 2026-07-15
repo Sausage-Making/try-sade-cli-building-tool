@@ -1,8 +1,9 @@
 ###### npm package
 
-# Try-out: npm CLI Building Tool sade
+# Try-out: npm CLI Building Tool sade v1.8.1
 
 Brief try-out of the npm CLI Building Tool [sade](#sade-npm-package) as a basis for usages and / or more elaborated evaluations elsewhere
+  * Used package version of sade: 1.8.1
 
 *[hh lohmann &lt;hh.lohmann@gmail.com&gt;](mailto:hh.lohmann@gmail.com?subject=try-sade-cli-building-tool)*
 
@@ -14,17 +15,28 @@ Brief try-out of the npm CLI Building Tool [sade](#sade-npm-package) as a basis 
 </p>
 
 
-## Caution
-
-**... special warning if exposed function(s) / executable(s) may allow / imply risky things like changing or using sensitive settings like credentials**
-
-
 ## Synopsis
 
 ```js
-  import { ... } from '...'
+  import sade from 'sade';
 ```
 
+```js
+  const cliDirect = sade('cli-direct',true);
+  cliDirect
+  .describe('A CLI directly running without commands, requiring "argOne"
+    and optionally accepting "argTwo"')
+  // see "Examples"
+```
+
+```js
+  const cliCommand = sade('cli-command');
+  cliCommand
+  .command('name <argOne> [argTwo]')
+  .describe('A CLI with command "name", requiring "argOne" and optionally
+    accepting "argTwo"')
+  // see "Examples"
+```
 
 ## Parameters
 
@@ -43,7 +55,36 @@ Brief try-out of the npm CLI Building Tool [sade](#sade-npm-package) as a basis 
 
 ## Examples
 
-... example calls for exposed function(s) / executable(s)
+```js
+  const cliDirect = sade('cli-direct',true);
+  cliDirect
+  .describe('A CLI directly running without commands, requiring "argOne"
+    and optionally accepting "argTwo"')
+  .option('-o, --option', 'Option "-o" / "--option" with default "value"',
+    'value')
+  .example('cli-direct argOne')
+  .example('cli-direct argOne argTwo -o myValue')
+  .action((argOne, argTwo, optionsArray) => {
+    // Code to run with collected "argOne", "argTwo" and an otpionsArray
+    // containing passed and / or default options  
+  });
+```
+
+```js
+  const cliCommand = sade('cli-command');
+  cliCommand
+  .command('name <argOne> [argTwo]')
+  .describe('A CLI with command "name", requiring "argOne" and optionally
+    accepting "argTwo"')
+  .option('-o, --option', 'Option "-o" / "--option" with default "value"',
+    'value')
+  .example('cli-command name argOne')
+  .example('cli-command name argOne argTwo -o myValue')
+  .action((argOne, argTwo, optionsArray) => {
+    // Code to run with collected "argOne", "argTwo" and an otpionsArray
+    // containing passed and / or default options  
+  });
+```
 
 
 ## Demo
@@ -96,7 +137,7 @@ Pick for your preferred package manager:
 
 ## Details
 
-... for deeper understanding what the exposed function(s) / executable(s) and / or short explanation does / do
+* Package contains bundled versions of index.js / index.mjs what makes it impossible to have a quick glance on internals e.g. to check details for a specific use case (i.e. you always have to switch to the [repo](#sade-npm-package))
 
 
 ## Tests
