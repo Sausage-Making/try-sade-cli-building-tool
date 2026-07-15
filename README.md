@@ -22,16 +22,16 @@ Brief try-out of the npm CLI Building Tool [sade](#sade-npm-package) as a basis 
 ```
 
 ```js
-  const cliDirect = sade('cli-direct',true);
-  cliDirect
+  const singleCli = sade('cli-direct',true);
+  singleCli
   .describe('A CLI directly running without commands, requiring "argOne"
     and optionally accepting "argTwo"')
   // see "Examples"
 ```
 
 ```js
-  const cliCommand = sade('cli-command');
-  cliCommand
+  const commandCli = sade('cli-command');
+  commandCli
   .command('name <argOne> [argTwo]')
   .describe('A CLI with command "name", requiring "argOne" and optionally
     accepting "argTwo"')
@@ -40,12 +40,13 @@ Brief try-out of the npm CLI Building Tool [sade](#sade-npm-package) as a basis 
 
 ## Parameters
 
-... parameters of exposed function(s) / executable(s)
+### Default export: Returning object intialized with CLI name and switch
+  * The passed CLI name to be displayed in help screens
+  * Switch for direct execution (`true`) or with command(s) (default `false)
 
-### ...parameter...
-...parameter-short-description...
-  * ...parameter-detail...
+### Methods of returned object
 
+#### 
 
 
 ## Returns
@@ -55,36 +56,48 @@ Brief try-out of the npm CLI Building Tool [sade](#sade-npm-package) as a basis 
 
 ## Examples
 
-```js
-  const cliDirect = sade('cli-direct',true);
-  cliDirect
-  .describe('A CLI directly running without commands, requiring "argOne"
-    and optionally accepting "argTwo"')
-  .option('-o, --option', 'Option "-o" / "--option" with default "value"',
-    'value')
-  .example('cli-direct argOne')
-  .example('cli-direct argOne argTwo -o myValue')
-  .action((argOne, argTwo, optionsArray) => {
-    // Code to run with collected "argOne", "argTwo" and an otpionsArray
-    // containing passed and / or default options  
-  });
-```
+* Without commands = "single command mode"
+  * Code
+    ```js
+      const singleCli = sade('cli-direct',true);
+      singleCli
+      .describe('A CLI directly running without commands, requiring "argOne"
+        and optionally accepting "argTwo"')
+      .option('-o, --option', 'Option "-o" / "--option" with default "value"',
+        'value')
+      .example('cli-direct argOne')
+      .example('cli-direct argOne argTwo -o myValue')
+      .action((argOne, argTwo, optionsArray) => {
+        // Code to run with collected "argOne", "argTwo" and an otpionsArray
+        // containing passed and / or default options  
+      });
+    ```
+  * Output
+    ```sh
+      ...
+    ```
 
-```js
-  const cliCommand = sade('cli-command');
-  cliCommand
-  .command('name <argOne> [argTwo]')
-  .describe('A CLI with command "name", requiring "argOne" and optionally
-    accepting "argTwo"')
-  .option('-o, --option', 'Option "-o" / "--option" with default "value"',
-    'value')
-  .example('cli-command name argOne')
-  .example('cli-command name argOne argTwo -o myValue')
-  .action((argOne, argTwo, optionsArray) => {
-    // Code to run with collected "argOne", "argTwo" and an otpionsArray
-    // containing passed and / or default options  
-  });
-```
+* With commands
+  * Code
+    ```js
+      const commandCli = sade('cli-command');
+      commandCli
+      .command('name <argOne> [argTwo]')
+      .describe('A CLI with command "name", requiring "argOne" and optionally
+        accepting "argTwo"')
+      .option('-o, --option', 'Option "-o" / "--option" with default "value"',
+        'value')
+      .example('cli-command name argOne')
+      .example('cli-command name argOne argTwo -o myValue')
+      .action((argOne, argTwo, optionsArray) => {
+        // Code to run with collected "argOne", "argTwo" and an otpionsArray
+        // containing passed and / or default options  
+      });
+    ```
+  * Output
+    ```sh
+      ...
+    ```
 
 
 ## Demo
