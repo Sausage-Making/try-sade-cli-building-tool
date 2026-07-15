@@ -1,5 +1,8 @@
 {
   "i": "ISSUES",
   "o": "try-sade-cli-building-tool",
-  "#4294c800 rename": { "0": "@:DONE Rename from try-sade to try-sade-cli-building-tool" }
+  "#4294c800 rename": { "0": "@:DONE Rename from try-sade to try-sade-cli-building-tool" },
+  "#aec4a484 template": { "0": "@:RUNS Apply #template-gh",
+    "afterwards": { "0": "Stupidly enough only in retrospect" }
+  }
 }
