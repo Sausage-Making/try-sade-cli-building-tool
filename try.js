@@ -1,13 +1,25 @@
 const sade = require('sade');
 
-const prog = sade('my-cli');
+const cli = sade('my-cli');
 
-prog
+const console_org=console;
+const myConsole={
+  store:{
+    log: [],
+    error: []
+  },
+  log(...args){this.store.log=args;},
+  error(...args){this.store.error=args;}
+}
+// console=myConsole;
+process.stdout.write=(arg)=>console.log('NUGGA',arg);
+
+cli
   .version('1.0.5')
   .option('--global, -g', 'An example global flag')
   .option('-c, --config', 'Provide path to custom config', 'foo.config.js');
 
-prog
+cli
   .command('build <src> <dest>' )
   .describe('Build the source directory. Expects an `index.js` entry file.')
   .option('-o, --output', 'Change the name of the output file', 'bundle.js')
@@ -16,7 +28,12 @@ prog
   .action((src, dest, opts) => {
     console.log(`> building from ${src} to ${dest}`);
     console.log('> these are extra opts', opts);
-  });
+  })
+;
 
-prog.parse(process.argv, { unknown: arg => `jugga: ${arg}`});
+cli.parse(process.argv, { unknown: arg => `jugga: ${arg}`});
 
+// console.log('NUGGA');
+// console=console_org;
+console.log('OUGGA');
+console.log(myConsole.store);
